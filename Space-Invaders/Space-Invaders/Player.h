@@ -7,7 +7,7 @@ class Player : public Entity {
 public:
 	Player() {
 		posX = 1;
-		posY = 2;
+		posY = 3;
 	}
 	int hearts() {
 		return lives;

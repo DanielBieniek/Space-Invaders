@@ -5,24 +5,47 @@ using namespace std;
 class Board {
 	int width;
 	int height;
-	int EnemyCount;
 	Player player;
 	vector<Enemy> enemies = {};
 	vector<Projectile> projectiles = {};
 public:
-	Board(int w, int h) {
+	Board(int w, int h) { //CONSTRUCTOR
 		width = w;
 		height = h;
 	}
+	/*
+	int BoardHeight() {
+		return height;
+	}
+	int BoardWidth() {
+		return width;
+	}
+	*/
+	void EveryFrame() {
+		for (int i = 0; i < (int)projectiles.size(); i++) {
+			projectiles[i].moveX(1); //move projectiles right every frame
+		}
+		draw(); //draw the board every frame
+	}
+
+	void EverySecond() {
+		for (int i = 0; i < (int)enemies.size(); i++) {
+			enemies[i].moveX(-1); //move enemies every second
+		}
+		spawnEnemy(rand() % height); //spawn new enemy
+	}
+
 	void spawnEnemy(int h) {
-		Enemy e(width - 1, h);
-		enemies.push_back(e);
+		Enemy e = Enemy(width - 1, h); //create new enemy
+		enemies.push_back(e); //and push it to vector of enemies
 	}
 	void spawnProjectile() {
 		Projectile p(player.locationX() + 1, player.locationY()); //create a projectile at player location
 		projectiles.push_back(p);
 	}
+
 	void draw() {
+		system("cls");
 		cout << endl << "\t";
 		for (int h = -1; h <= height; h++) {
 			for (int w = -1; w <= width; w++) {
