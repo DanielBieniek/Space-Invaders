@@ -3,38 +3,60 @@ using namespace std;
 
 //BOARD
 class Board {
-	int width;
-	int height;
+	int width = 20;
+	int height = 7;
 	Player player;
-	vector<Enemy> enemies = {};
-	vector<Projectile> projectiles = {};
+	deque<Enemy> enemies = {};
+	deque<Projectile> projectiles = {};
 public:
-	Board(int w, int h) { //CONSTRUCTOR
-		width = w;
-		height = h;
-	}
-	/*
+	Board() {} //DEFAULT CONSTRUCTOR
+	bool gameLoop = true; //used to be able to stop the game if the player lost all lives
+
+	//OUTPUT BOARD DIMENSIONS
 	int BoardHeight() {
 		return height;
 	}
 	int BoardWidth() {
 		return width;
 	}
-	*/
-	void EveryFrame() {
-		for (int i = 0; i < (int)projectiles.size(); i++) {
-			projectiles[i].moveX(1); //move projectiles right every frame
-		}
-		draw(); //draw the board every frame
-	}
 
-	void EverySecond() {
+	//MOVE ENTITIES
+	void moveEnemies() {
 		for (int i = 0; i < (int)enemies.size(); i++) {
-			enemies[i].moveX(-1); //move enemies every second
+			try {
+				if (enemies[i].locationX() - 1 <= player.locationX()) throw 1;
+				enemies[i].moveX(-1); //move enemies
+			}
+			catch (int e) {
+				player.hit();
+				enemies.pop_front();
+			}
 		}
-		spawnEnemy(rand() % height); //spawn new enemy
 	}
 
+	void movePlayer(int d) {
+		try {
+			if (player.locationY() + d < 0 || player.locationY() + d >= height) throw 1;
+			player.moveY(d); //move a player
+		}
+		catch (int e) {} //if cant move there, dont do anything
+		
+	}
+
+	void moveProjectiles() {
+		for (int i = 0; i < (int)projectiles.size(); i++) {
+			try {
+				if (projectiles[i].locationX() + 1 > width) throw 1;
+				projectiles[i].moveX(1); //move projectiles
+			}
+			catch (int e) {
+				projectiles.pop_front();
+			}
+			
+		}
+	}
+
+	//SPAWN ENTITIES
 	void spawnEnemy(int h) {
 		Enemy e = Enemy(width - 1, h); //create new enemy
 		enemies.push_back(e); //and push it to vector of enemies
@@ -44,7 +66,50 @@ public:
 		projectiles.push_back(p);
 	}
 
+	//DRAW THE BOARD
 	void draw() {
+		system("cls");
+		cout << endl << "\t";
+		cout << "|-";
+		for (int l = 3; l >= 1; l--) { //draw the amount of lives the player has
+			cout << (l <= player.hearts() ? 'o' : '-');
+		}
+		cout << "----------------|";
+		for (int h = 0; h < height; h++) {
+			cout << endl << "\t" << "|";
+			for (int w = 0; w < width; w++) {
+				cout << drawEntity(w, h); //DRAW INSIDE THE BOARD
+			}
+			cout << "|";
+			
+		}
+		cout << endl << "\t" << "|--------------------|" << endl;
+	}
+
+	char drawEntity(int w, int h) {
+		//draw player
+		if (h == player.locationY() && w == 1) {
+			return '>'; //draw player
+		}
+		//draw enemies
+		for (int i = 0; i < (int)enemies.size(); i++) { //for all enemies
+			if (h == enemies[i].locationY() && w == enemies[i].locationX()) {
+				return '#'; //draw enemy
+			}
+		}
+		//draw projectile
+		for (int i = 0; i < (int)projectiles.size(); i++) { //for all projectiles
+			if (h == projectiles[i].locationY() && w == projectiles[i].locationX()) {
+				return '-'; //draw projectiles
+			}
+		}
+		return ' '; //draw empty space
+	}
+};
+
+	/* OLD FUNCTIONS
+
+	void drawOld() { //OLD DRAWING FUNCTION
 		system("cls");
 		cout << endl << "\t";
 		for (int h = -1; h <= height; h++) {
@@ -71,42 +136,4 @@ public:
 		}
 		cout << endl;
 	}
-	char drawEntity(int w, int h) {
-		//draw player
-		if (w == 1 && h == player.locationY()) {
-			return '>';
-
-		}
-		//draw enemies
-		for (int i = 0; i < (int)enemies.size(); i++) { //for all enemies
-			if (w == enemies[i].locationX() && h == enemies[i].locationY()) {
-				return '#'; //draw enemy
-			}
-		}
-		//draw projectile
-		for (int i = 0; i < (int)projectiles.size(); i++) { //for all projectiles
-			if (w == projectiles[i].locationX() && h == projectiles[i].locationY()) {
-				return '-'; //draw projectiles
-			}
-		}
-
-		//draw empty space
-		return ' ';
-	}
-	void spawnEnemiesTEMPORARY() {
-		Enemy e1(15, 4);
-		Enemy e2(16, 0);
-		Enemy e3(18, 2);
-		Enemy e4(19, 1);
-		enemies.push_back(e1);
-		enemies.push_back(e2);
-		enemies.push_back(e3);
-		enemies.push_back(e4);
-	}
-	void spawnProjectilesTEMPORARY() {
-		Projectile p1(4, 2);
-		Projectile p2(11, 3);
-		projectiles.push_back(p1);
-		projectiles.push_back(p2);
-	}
-};
+	*/
