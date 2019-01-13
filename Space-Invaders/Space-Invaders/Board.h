@@ -45,6 +45,7 @@ public:
 				}
 				catch (int e) {
 					player.hit(); //decrease the amount of lives the player has
+					checkPlayerLives(); //check whether the player lost all lives 
 					enemies[i].pop_front(); //delete the enemy if it reached the player
 				}
 			}
@@ -94,38 +95,45 @@ public:
 
 	//DRAW THE BOARD
 	void draw() {
-		system("cls");
-		cout << endl << "\t";
-		cout << "|-";
+		COORD coord; //used for SetConsoleCursorPosition
+		coord.X = 0;
+		coord.Y = 0;
+		//reset the position of a console cursor to the begining instead of clearing the console every time.
+		//fixed flickering of the board
+		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
+		cout << endl << "\t" << char(201) << char(3);
 		for (int l = 3; l >= 1; l--) { //draw lives
-			cout << (l <= player.hearts() ? 'o' : '-');
+			cout << (l <= player.hearts() ? 'O' : '0');
 		}
-		cout << "------------";
+		for (int i = 0; i < 11; i++) cout << char(205);
+		cout << '$';
 		if (points >= 999) cout << "999";				//
 		else cout << setfill('0') << setw(3) << points; //draw points, if >=999, write 999
-		cout << "-|";
+		cout << char(205) << char(187);
 		for (int h = 0; h < height; h++) {
-			cout << endl << "\t" << "|";
+			cout << endl << "\t" << char(186);
 			for (int w = 0; w < width; w++) {
 				cout << drawEntity(w, h); //DRAW INSIDE THE BOARD
 			}
-			cout << "|";
+			cout << char(186);
 			
 		}
-		cout << endl << "\t" << "|--------------------|" << endl;
+		cout << endl << "\t" << char(200);
+		for (int i = 0; i<20; i++) cout << char(205);
+		cout << char(188) << endl;
 	}
 
 	char drawEntity(int w, int h) {
 		//draw player
 		if (h == player.locationY() && w == 1) {
-			return '>'; //draw player
+			return char(16); //draw player
 		}
 		//draw enemies
 		for (int i = 0; i < height; i++) { //for all rows
 			if (i == h) {
 				for (int j = 0; j < (int)enemies[i].size(); j++) { //for all enemies
 					if (w == enemies[i][j].locationX()) {
-						return '#'; //draw enemy
+						return char(4); //draw enemy
 					}
 				}
 			}
@@ -143,34 +151,3 @@ public:
 		return ' '; //draw empty space
 	}
 };
-
-	/* OLD FUNCTIONS
-
-	void drawOld() { //OLD DRAWING FUNCTION
-		system("cls");
-		cout << endl << "\t";
-		for (int h = -1; h <= height; h++) {
-			for (int w = -1; w <= width; w++) {
-				if (w == -1 || w == width) {
-					cout << "|"; //draw border
-				}
-				else {
-					if (h == -1) {
-						if (w == 1 && player.hearts() >= 1) cout << "o"; //draw lives
-						else if (w == 2 && player.hearts() >= 2) cout << "o";
-						else if (w == 3 && player.hearts() >= 3) cout << "o";
-						else cout << "-"; //draw border
-					}
-					else if (h == height) {
-						cout << "-"; //draw border
-					}
-					else {
-						cout << drawEntity(w, h); //DRAW INSIDE THE BOARD
-					}
-				}
-			}
-			cout << endl << "\t";
-		}
-		cout << endl;
-	}
-	*/
