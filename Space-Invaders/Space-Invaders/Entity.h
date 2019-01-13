@@ -20,5 +20,5 @@ public:
 	void moveY(int y) {
 		posY += y;
 	}
-	virtual void moveX() {} //Polymorphism, for projectile add 1 to x coordinate, for enemy add -1 to x coordinate.
+	virtual void moveX() {} //Polymorphism, for Projectile add 1 to X coordinate, for Enemy subtract 1 from X coordinate.
 };
