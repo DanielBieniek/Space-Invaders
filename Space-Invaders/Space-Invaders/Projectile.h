@@ -4,8 +4,8 @@ using namespace std;
 //PROJECTILE
 class Projectile : public Entity {
 public:
-	Projectile(int x, int y) {
-		posX = x;
-		posY = y;
+	Projectile(int x, int y) : Entity(x, y) {};
+	void moveX() {
+		posX++;
 	}
 };

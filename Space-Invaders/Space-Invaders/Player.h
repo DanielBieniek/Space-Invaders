@@ -5,14 +5,7 @@ using namespace std;
 class Player : public Entity {
 	int lives = 3;
 public:
-	Player() {
-		posX = 1;
-		posY = 3;
-	}
-	Player(int x, int y) {
-		posX = x;
-		posY = y;
-	}
+	Player() : Entity(1, 3) {};
 	int hearts() {
 		return lives;
 	}

@@ -25,7 +25,7 @@ public:
 		for (int i = 0; i < (int)enemies.size(); i++) {
 			try {
 				if (enemies[i].locationX() - 1 <= player.locationX()) throw 1;
-				enemies[i].moveX(-1); //move enemies
+				enemies[i].moveX(); //move enemies
 			}
 			catch (int e) {
 				player.hit();
@@ -47,7 +47,7 @@ public:
 		for (int i = 0; i < (int)projectiles.size(); i++) {
 			try {
 				if (projectiles[i].locationX() + 1 > width) throw 1;
-				projectiles[i].moveX(1); //move projectiles
+				projectiles[i].moveX(); //move projectiles
 			}
 			catch (int e) {
 				projectiles.pop_front();
