@@ -76,7 +76,7 @@ public:
 
 	//CHECK GAME STATES
 	void checkPlayerLives() {
-		if (player.hearts() <= 0) {
+		if (player.hearts() < 0) {
 			gameLoop = false;
 		}
 	}
@@ -101,15 +101,16 @@ public:
 		//reset the position of a console cursor to the begining instead of clearing the console every time.
 		//fixed flickering of the board
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
-		cout << endl << "\t" << char(201) << char(3);
-		for (int l = 3; l >= 1; l--) { //draw lives
-			cout << (l <= player.hearts() ? 'O' : '0');
-		}
-		for (int i = 0; i < 11; i++) cout << char(205);
-		cout << '$';
+		cout << endl << "\t" << char(201) << char(205) << char(185) << char(3);
+		if (player.hearts() >= 9) cout << "9";		//
+		else if (player.hearts() < 0) cout << "0";	// write number of lives (9 if >9, or 0 if <0)
+		else cout << player.hearts();				//
+		cout << char(204);
+		for (int i = 0; i < 8; i++) cout << char(205);
+		cout << char(185) <<  '$';
 		if (points >= 999) cout << "999";				//
 		else cout << setfill('0') << setw(3) << points; //draw points, if >=999, write 999
-		cout << char(205) << char(187);
+		cout << char(204) << char(205) << char(187);
 		for (int h = 0; h < height; h++) {
 			cout << endl << "\t" << char(186);
 			for (int w = 0; w < width; w++) {

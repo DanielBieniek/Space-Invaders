@@ -7,8 +7,7 @@ void gameMenu() {
 	do {
 		choice = '0';
 		system("cls");
-		cout << endl << "\t     WELCOME TO" << endl;
-		cout << "\t   SPACE-INVADERS" << endl;
+		cout << endl << "\t   SPACE-INVADERS" << endl;
 		cout << "\t by  Daniel Bieniek" << endl;
 		cout << endl << "\t1. Start" << endl;
 		cout << "\t2. Instructions" << endl;
