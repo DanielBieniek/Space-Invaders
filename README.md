@@ -4,16 +4,10 @@ AEII Macrofaculty sem.3 group.3
 
 **[Download project](https://github.com/DanielBieniek/Space-Invaders/releases)**
 
-**Game Menu**  
+**Screenshots**  
 ![Game Menu](https://i.imgur.com/tuFbRor.png)
-
-**Instructions**  
-![Instructions](https://i.imgur.com/TFIAxaz.png)
-
-**Game board**  
+![Instructions](https://i.imgur.com/TFIAxaz.png)  
 ![Game](https://i.imgur.com/Myl8Gyj.png)
-
-**Game Over screen**  
 ![Game Over](https://i.imgur.com/mdgjHvK.png?2)
 
 **CP3 project requirements:**
