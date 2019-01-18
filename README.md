@@ -17,8 +17,8 @@ AEII Macrofaculty sem.3 group.3
 - [x] Polymorphism
 - [ ] Multiple inheritance
 - [ ] RTTI
-- [ ] Templates
 - [x] Exceptions
+- [ ] Templates
 - [x] I/O Streams
 
 *CP3 - Computer Programming sem.3*
