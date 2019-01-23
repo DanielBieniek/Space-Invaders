@@ -2,7 +2,7 @@
 **Author:** Daniel Bieniek  
 AEII Macrofaculty sem.3 group.3  
 
-**[Download project](https://github.com/DanielBieniek/Space-Invaders/releases)**
+**[Download project and report](https://github.com/DanielBieniek/Space-Invaders/releases)**
 
 **Screenshots**  
 ![Game Menu](https://i.imgur.com/tuFbRor.png)
